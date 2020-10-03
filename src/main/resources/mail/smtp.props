@@ -1,0 +1,6 @@
+mail.smtp.host=smtp.gmail.com
+mail.smtp.port=465
+mail.smtp.ssl.enable=true
+mail.smtp.auth=true
+from=abdessamed.trader@gmail.com
+pass=crAtrtOfZGQotlM96dR+TA==:a6IPJ9GBawlW15IYz42gvg==
