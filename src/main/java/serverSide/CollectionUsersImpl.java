@@ -1,7 +1,7 @@
 package serverSide;
 
 import business.ICollectionUsers;
-import business.models.User;
+import business.models.Employee;
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.URISyntaxException;
@@ -20,7 +20,7 @@ public class CollectionUsersImpl implements ICollectionUsers {
     private static final Logger LOGGER = Logger.getLogger(CollectionUsersImpl.class.getSimpleName());
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     private FileLoader fileLoader;
-    protected Set<User> users;
+    protected Set<Employee> employees;
     protected LocalDate today= LocalDate.now(ZoneId.systemDefault());
 
     protected CollectionUsersImpl() {
@@ -37,17 +37,17 @@ public class CollectionUsersImpl implements ICollectionUsers {
     }
 
     @Override
-    public synchronized Set<User> allUsers() {
-        if (users == null) {
-            users = new TreeSet<>();
+    public synchronized Set<Employee> allUsers() {
+        if (employees == null) {
+            employees = new TreeSet<>();
             loadUsers();
         }
 
-        return users;
+        return employees;
     }
 
     @Override
-    public Set<User> findUsersBornToday() {
+    public Set<Employee> findUsersBornToday() {
         return allUsers().stream().filter(user -> {
             if (user.getDateOfBirth().isLeapYear() && !today.isLeapYear()) {
                 return user.getDateOfBirth().getDayOfYear() == today.getDayOfYear() +1;
@@ -66,15 +66,15 @@ public class CollectionUsersImpl implements ICollectionUsers {
                     .map(str -> str.trim())
                     .collect(Collectors.toList());
 
-            if (formatLine.size() == User.class.getDeclaredFields().length) {
+            if (formatLine.size() == Employee.class.getDeclaredFields().length) {
                 LocalDate dateOfBirth = null;
                 try {
                     dateOfBirth = LocalDate.parse(formatLine.get(2), dateTimeFormatter);
-                    User user = new User(formatLine.get(0),
+                    Employee employee = new Employee(formatLine.get(0),
                             formatLine.get(1),
                             dateOfBirth,
                             formatLine.get(3));
-                    users.add(user);
+                    employees.add(employee);
                 } catch (DateTimeParseException ex) {
                     LOGGER.severe("can't parse given line segment: "+formatLine.get(2));
                     ex.printStackTrace();

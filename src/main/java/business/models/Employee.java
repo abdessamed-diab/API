@@ -5,13 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class User implements Cloneable, Serializable, Comparable<User> {
+public class Employee implements Cloneable, Serializable, Comparable<Employee> {
     private String lastName;
     private String firstName;
     private LocalDate dateOfBirth;
     private String email;
 
-    public User(String lastName, String firstName, LocalDate dateOfBirth, String email) throws IllegalArgumentException{
+    public Employee(String lastName, String firstName, LocalDate dateOfBirth, String email) throws IllegalArgumentException{
         if (StringUtils.isEmpty(lastName) || StringUtils.isEmpty(lastName) || dateOfBirth == null || StringUtils.isEmpty(lastName)) {
             throw new IllegalArgumentException("all fields mandatory.");
         }
@@ -31,16 +31,16 @@ public class User implements Cloneable, Serializable, Comparable<User> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || !obj.getClass().isAssignableFrom(User.class)) {
+        if (obj == null || !obj.getClass().isAssignableFrom(Employee.class)) {
             return false;
         }
 
-        User user = (User) obj;
+        Employee employee = (Employee) obj;
 
-        return lastName.equalsIgnoreCase(user.lastName)
-                && firstName.equalsIgnoreCase(user.firstName)
-                && dateOfBirth.equals(user.dateOfBirth)
-                && email.equalsIgnoreCase(user.email);
+        return lastName.equalsIgnoreCase(employee.lastName)
+                && firstName.equalsIgnoreCase(employee.firstName)
+                && dateOfBirth.equals(employee.dateOfBirth)
+                && email.equalsIgnoreCase(employee.email);
     }
 
     @Override
@@ -52,23 +52,23 @@ public class User implements Cloneable, Serializable, Comparable<User> {
     }
 
     @Override
-    protected User clone() throws CloneNotSupportedException {
-        return new User(lastName, firstName, dateOfBirth, email);
+    protected Employee clone() throws CloneNotSupportedException {
+        return new Employee(lastName, firstName, dateOfBirth, email);
     }
 
     @Override
-    public int compareTo(User user) {
-        int dateBasedComparison = dateOfBirth.compareTo(user.dateOfBirth);
+    public int compareTo(Employee employee) {
+        int dateBasedComparison = dateOfBirth.compareTo(employee.dateOfBirth);
         if (dateBasedComparison != 0) {
             return dateBasedComparison;
         }
 
-        int firstNameBaseComparison = firstName.toLowerCase().compareTo(user.firstName.toLowerCase());
+        int firstNameBaseComparison = firstName.toLowerCase().compareTo(employee.firstName.toLowerCase());
         if (firstNameBaseComparison != 0) {
             return firstNameBaseComparison;
         }
 
-        return lastName.toLowerCase().compareTo(user.lastName.toLowerCase());
+        return lastName.toLowerCase().compareTo(employee.lastName.toLowerCase());
     }
 
     public String getLastName() {

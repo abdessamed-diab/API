@@ -1,7 +1,7 @@
 package serverSide;
 
 import business.IEmptyCollectionUsers;
-import business.models.User;
+import business.models.Employee;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -11,17 +11,17 @@ public class EmptyCollectionUsersImpl extends CollectionUsersImpl implements IEm
 
     public EmptyCollectionUsersImpl() {
         super();
-        super.users = new TreeSet<>();
+        super.employees = new TreeSet<>();
     }
 
     @Override
-    public synchronized Set<User> allUsers() {
-        return super.users;
+    public synchronized Set<Employee> allUsers() {
+        return super.employees;
     }
 
     @Override
-    public Set<User> findUsersBornToday() {
-        return !super.users.isEmpty() ? super.findUsersBornToday() : super.users;
+    public Set<Employee> findUsersBornToday() {
+        return !super.employees.isEmpty() ? super.findUsersBornToday() : super.employees;
     }
 
     @Override
@@ -29,12 +29,12 @@ public class EmptyCollectionUsersImpl extends CollectionUsersImpl implements IEm
         super.today = today;
     }
 
-    public boolean addUser(User user) {
-        return super.users.add(user);
+    public boolean addUser(Employee employee) {
+        return super.employees.add(employee);
     }
 
-    public synchronized void  setUsers(Set<User> users) {
-        super.users.clear();
-        super.users.addAll(users);
+    public synchronized void  setUsers(Set<Employee> employees) {
+        super.employees.clear();
+        super.employees.addAll(employees);
     }
 }

@@ -1,13 +1,13 @@
 package business;
 
-import business.models.User;
+import business.models.Employee;
 
 import java.util.Set;
 
 public interface ICollectionUsers {
 
-    Set<User> allUsers();
+    Set<Employee> allUsers();
 
-    Set<User> findUsersBornToday();
+    Set<Employee> findUsersBornToday();
 
 }

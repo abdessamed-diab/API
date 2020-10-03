@@ -2,7 +2,7 @@ package serverSide;
 
 import business.ICollectionUsers;
 import business.IEmptyCollectionUsers;
-import business.models.User;
+import business.models.Employee;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -26,48 +26,48 @@ class CollectionUsersImplTest {
     @Test
     public void testAllUsers() {
         collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users_0.csv");
-        Set<User> users = collectionUsers.allUsers();
-        assertEquals(2, users.size());
+        Set<Employee> employees = collectionUsers.allUsers();
+        assertEquals(2, employees.size());
     }
 
     @Test
     public void testAllUsersThrowDateTimeParseException() {
         collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users.csv");
-        Set<User> users = collectionUsers.allUsers();
-        assertEquals(2, users.size());
+        Set<Employee> employees = collectionUsers.allUsers();
+        assertEquals(2, employees.size());
     }
 
     @Test
     public void testAllUsersSplitLine() {
         collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users_2.csv");
-        Set<User> users = collectionUsers.allUsers();
-        assertEquals(2, users.size());
+        Set<Employee> employees = collectionUsers.allUsers();
+        assertEquals(2, employees.size());
     }
 
     @Test
     public void testAllUsersLoadOnlyFourFields() {
         collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users_3.csv");
-        Set<User> users = collectionUsers.allUsers();
-        assertEquals(1, users.size());
+        Set<Employee> employees = collectionUsers.allUsers();
+        assertEquals(1, employees.size());
     }
 
     @Test
     public void testFindUsersBornToday() {
-        Set<User> users = new TreeSet<>();
+        Set<Employee> employees = new TreeSet<>();
         LocalDate today = LocalDate.now(ZoneId.systemDefault());
         LocalDate notTodayDate = today.minusDays(3);
         for (int i = 0; i < 3 ; i++) {
-            User notBornTodayUser = new User("lastname"+i, "firstname"+1, notTodayDate, "adress@example.com");
-            users.add(notBornTodayUser);
+            Employee notBornTodayEmployee = new Employee("lastname"+i, "firstname"+1, notTodayDate, "adress@example.com");
+            employees.add(notBornTodayEmployee);
         }
 
         for (int i = 3; i < 8 ; i++) {
-            User BornTodayUser = new User("lastname"+i, "firstname"+1, today, "adress@example.com");
-            users.add(BornTodayUser);
+            Employee bornTodayEmployee = new Employee("lastname"+i, "firstname"+1, today, "adress@example.com");
+            employees.add(bornTodayEmployee);
         }
 
         collectionUsers = new EmptyCollectionUsersImpl();
-        ((IEmptyCollectionUsers)collectionUsers).setUsers(users);
+        ((IEmptyCollectionUsers)collectionUsers).setUsers(employees);
         assertEquals(5, collectionUsers.findUsersBornToday().size());
     }
 
@@ -77,8 +77,8 @@ class CollectionUsersImplTest {
         LocalDate now = LocalDate.now(ZoneId.systemDefault());
         LocalDate todayNotLeapYear = LocalDate.of(2021, now.getMonth().getValue(), now.getDayOfMonth());
         LocalDate bornLeapYear = LocalDate.of(1984, now.getMonth().getValue(), now.getDayOfMonth());
-        User user = new User("lastname", "firstname", bornLeapYear, "internetAddress@example.fr");
-        ((IEmptyCollectionUsers)collectionUsers).addUser(user);
+        Employee employee = new Employee("lastname", "firstname", bornLeapYear, "internetAddress@example.fr");
+        ((IEmptyCollectionUsers)collectionUsers).addUser(employee);
         ((IEmptyCollectionUsers)collectionUsers).setToday(todayNotLeapYear);
         assertEquals(1, collectionUsers.findUsersBornToday().size());
     }

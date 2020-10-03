@@ -1,14 +1,14 @@
 package business;
 
-import business.models.User;
+import business.models.Employee;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 public interface IEmptyCollectionUsers extends ICollectionUsers {
 
-    boolean addUser(User user);
-    void    setUsers(Set<User> users);
+    boolean addUser(Employee employee);
+    void    setUsers(Set<Employee> employees);
     void    setToday(LocalDate today);
 
 }

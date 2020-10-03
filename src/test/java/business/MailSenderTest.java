@@ -1,6 +1,6 @@
 package business;
 
-import business.models.User;
+import business.models.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.EmptyCollectionUsersImpl;
@@ -26,7 +26,7 @@ class MailSenderTest {
     public void testSend() throws GeneralSecurityException, IOException {
         LocalDate today = LocalDate.now(ZoneId.systemDefault());
         for (int i=0; i <2 ; i++) {
-            collectionUsers.addUser(new User("DIAB"+i, "Abdessamed"+i, today, "abdessamed.diab@gmail.com"));
+            collectionUsers.addUser(new Employee("DIAB"+i, "Abdessamed"+i, today, "abdessamed.diab@gmail.com"));
         }
         MailSender mailSender = new MailSender(collectionUsers, MailServerPropsImpl.Factory.getInstance());
         assertEquals(2, mailSender.send());
