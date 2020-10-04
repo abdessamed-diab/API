@@ -20,8 +20,8 @@ public class EmptyCollectionEmployeesImpl extends CollectionEmployeesImpl implem
     }
 
     @Override
-    public Set<Employee> findEmployeesBornToday() {
-        return !super.employees.isEmpty() ? super.findEmployeesBornToday() : super.employees;
+    public Set<Employee> findEmployeesDateBirthdayToday() {
+        return !super.employees.isEmpty() ? super.findEmployeesDateBirthdayToday() : super.employees;
     }
 
     @Override

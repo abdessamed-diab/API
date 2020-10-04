@@ -14,6 +14,11 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 import java.util.logging.Logger;
 
+/**
+ * decrypt an encrypted text.
+ * encrypt strategy is not provided for security reasons.
+ * note: developer can get original password value from memory after executing decrypt method.
+ */
 public final class DecryptPassword {
     private static final Logger LOGGER = Logger.getLogger(DecryptPassword.class.getSimpleName());
 

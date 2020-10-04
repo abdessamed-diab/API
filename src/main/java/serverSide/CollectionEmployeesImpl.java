@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * this class is thread safe,
+ */
 public class CollectionEmployeesImpl implements ICollectionEmployees {
     private static final Logger LOGGER = Logger.getLogger(CollectionEmployeesImpl.class.getSimpleName());
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -47,7 +50,7 @@ public class CollectionEmployeesImpl implements ICollectionEmployees {
     }
 
     @Override
-    public Set<Employee> findEmployeesBornToday() {
+    public Set<Employee> findEmployeesDateBirthdayToday() {
         return allEmployees().stream().filter(user -> {
             if (user.getDateOfBirth().isLeapYear() && !today.isLeapYear()) {
                 return user.getDateOfBirth().getDayOfYear() == today.getDayOfYear() +1;
@@ -58,6 +61,9 @@ public class CollectionEmployeesImpl implements ICollectionEmployees {
         }).collect(Collectors.toSet());
     }
 
+    /**
+     * iterate over flat file records, instantiate {@link Employee} entities and fill {@link Set<Employee>} employees.
+     */
     private void loadUsers() {
         fileLoader.generateBufferedReader().lines().skip(1).forEach(line -> {
             String[] lineToUserPropValues = line.split(",");

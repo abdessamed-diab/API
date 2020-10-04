@@ -20,3 +20,5 @@ Happy birthday, dear John!
 with the first name of the employee substituted for “John”.
 
 * user should enter send command line in order to interact with the system.
+
+* you can launch mvn site command line to visualise test and source reporting.

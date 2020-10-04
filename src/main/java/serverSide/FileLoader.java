@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class FileLoader {
-    private File flatFile;
+    private volatile File flatFile;
 
     public FileLoader(final String flatFileName) throws IllegalArgumentException, URISyntaxException {
         URL flatFileUrl = ClassLoader.getSystemResource(flatFileName);

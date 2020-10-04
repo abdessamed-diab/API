@@ -52,7 +52,7 @@ class CollectionEmployeesImplTest {
     }
 
     @Test
-    public void testFindEmployeesBornToday() {
+    public void testFindEmployeesDateBirthdayToday() {
         Set<Employee> employees = new TreeSet<>();
         LocalDate today = LocalDate.now(ZoneId.systemDefault());
         LocalDate notTodayDate = today.minusDays(3);
@@ -68,11 +68,11 @@ class CollectionEmployeesImplTest {
 
         collectionUsers = new EmptyCollectionEmployeesImpl();
         ((IEmptyCollectionEmployees)collectionUsers).setEmployees(employees);
-        assertEquals(5, collectionUsers.findEmployeesBornToday().size());
+        assertEquals(5, collectionUsers.findEmployeesDateBirthdayToday().size());
     }
 
     @Test
-    public void testFindEmployeesBornTodayLeapNoLeapYear() {
+    public void testFindEmployeesDateBirthdayTodayLeapNoLeapYear() {
         collectionUsers = new EmptyCollectionEmployeesImpl();
         LocalDate now = LocalDate.now(ZoneId.systemDefault());
         LocalDate todayNotLeapYear = LocalDate.of(2021, now.getMonth().getValue(), now.getDayOfMonth());
@@ -80,7 +80,7 @@ class CollectionEmployeesImplTest {
         Employee employee = new Employee("lastname", "firstname", bornLeapYear, "internetAddress@example.fr");
         ((IEmptyCollectionEmployees)collectionUsers).addEmployee(employee);
         ((IEmptyCollectionEmployees)collectionUsers).setToday(todayNotLeapYear);
-        assertEquals(1, collectionUsers.findEmployeesBornToday().size());
+        assertEquals(1, collectionUsers.findEmployeesDateBirthdayToday().size());
     }
 
 }
