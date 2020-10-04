@@ -37,7 +37,7 @@ public class CollectionUsersImpl implements ICollectionUsers {
     }
 
     @Override
-    public synchronized Set<Employee> allUsers() {
+    public synchronized Set<Employee> allEmployees() {
         if (employees == null) {
             employees = new TreeSet<>();
             loadUsers();
@@ -47,8 +47,8 @@ public class CollectionUsersImpl implements ICollectionUsers {
     }
 
     @Override
-    public Set<Employee> findUsersBornToday() {
-        return allUsers().stream().filter(user -> {
+    public Set<Employee> findEmployeesBornToday() {
+        return allEmployees().stream().filter(user -> {
             if (user.getDateOfBirth().isLeapYear() && !today.isLeapYear()) {
                 return user.getDateOfBirth().getDayOfYear() == today.getDayOfYear() +1;
             }

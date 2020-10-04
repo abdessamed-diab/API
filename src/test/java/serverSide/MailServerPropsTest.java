@@ -1,4 +1,4 @@
-package business;
+package serverSide;
 
 import org.junit.jupiter.api.Test;
 import serverSide.MailServerPropsImpl;
@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class IMailServerPropsTest {
+class MailServerPropsTest {
 
     @Test
     public void testLoadProperties() {
-        Properties props = MailServerPropsImpl.Factory.getInstance().getProps();
+        Properties props = MailServerPropsImpl.getInstance().getProps();
         assertEquals("smtp.gmail.com", props.getProperty("mail.smtp.host"));
 
         assertEquals("465", props.getProperty("mail.smtp.port"));

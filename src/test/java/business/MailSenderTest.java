@@ -26,16 +26,16 @@ class MailSenderTest {
     public void testSend() throws GeneralSecurityException, IOException {
         LocalDate today = LocalDate.now(ZoneId.systemDefault());
         for (int i=0; i <2 ; i++) {
-            collectionUsers.addUser(new Employee("DIAB"+i, "Abdessamed"+i, today, "abdessamed.diab@gmail.com"));
+            collectionUsers.addEmployee(new Employee("DIAB"+i, "Abdessamed"+i, today, "abdessamed.diab@gmail.com"));
         }
-        MailSender mailSender = new MailSender(collectionUsers, MailServerPropsImpl.Factory.getInstance());
+        MailSender mailSender = new MailSender(collectionUsers, MailServerPropsImpl.getInstance());
         assertEquals(2, mailSender.send());
     }
 
     @Test
     public void testSendThrowIllegalArgException() {
         MailSender mailSender = new MailSender(collectionUsers,
-                MailServerPropsImpl.Factory.getInstance("mail/test_smtp_IAException.props"));
+                MailServerPropsImpl.getInstance("mail/test_smtp_IAException.props"));
         assertThrows(IllegalArgumentException.class, () -> {
             mailSender.send();
         });

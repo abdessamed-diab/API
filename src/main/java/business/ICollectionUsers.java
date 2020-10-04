@@ -6,8 +6,8 @@ import java.util.Set;
 
 public interface ICollectionUsers {
 
-    Set<Employee> allUsers();
+    Set<Employee> allEmployees();
 
-    Set<Employee> findUsersBornToday();
+    Set<Employee> findEmployeesBornToday();
 
 }

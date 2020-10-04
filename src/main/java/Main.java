@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         ICollectionUsers collectionUsers = new CollectionUsersImpl("");
-        IMailServerProps mailServerProps = MailServerPropsImpl.Factory.getInstance();
+        IMailServerProps mailServerProps = MailServerPropsImpl.getInstance();
         IEndUserRequest endUserRequest = new MailSender(collectionUsers, mailServerProps);
 
         EndUserConsole console = new EndUserConsole(endUserRequest);

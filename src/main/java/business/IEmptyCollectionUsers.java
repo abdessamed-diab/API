@@ -7,8 +7,8 @@ import java.util.Set;
 
 public interface IEmptyCollectionUsers extends ICollectionUsers {
 
-    boolean addUser(Employee employee);
-    void    setUsers(Set<Employee> employees);
+    boolean addEmployee(Employee employee);
+    void    setEmployees(Set<Employee> employees);
     void    setToday(LocalDate today);
 
 }

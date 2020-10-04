@@ -15,13 +15,13 @@ public class EmptyCollectionUsersImpl extends CollectionUsersImpl implements IEm
     }
 
     @Override
-    public synchronized Set<Employee> allUsers() {
+    public synchronized Set<Employee> allEmployees() {
         return super.employees;
     }
 
     @Override
-    public Set<Employee> findUsersBornToday() {
-        return !super.employees.isEmpty() ? super.findUsersBornToday() : super.employees;
+    public Set<Employee> findEmployeesBornToday() {
+        return !super.employees.isEmpty() ? super.findEmployeesBornToday() : super.employees;
     }
 
     @Override
@@ -29,11 +29,11 @@ public class EmptyCollectionUsersImpl extends CollectionUsersImpl implements IEm
         super.today = today;
     }
 
-    public boolean addUser(Employee employee) {
+    public boolean addEmployee(Employee employee) {
         return super.employees.add(employee);
     }
 
-    public synchronized void  setUsers(Set<Employee> employees) {
+    public synchronized void  setEmployees(Set<Employee> employees) {
         super.employees.clear();
         super.employees.addAll(employees);
     }

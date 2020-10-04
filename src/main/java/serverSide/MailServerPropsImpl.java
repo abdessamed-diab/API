@@ -15,6 +15,14 @@ public final class MailServerPropsImpl implements IMailServerProps {
     private Properties props;
     private String serverPropsFileName;
 
+    public static MailServerPropsImpl getInstance () {
+        return new MailServerPropsImpl();
+    }
+
+    public static MailServerPropsImpl getInstance (String serverPropsFileName) {
+        return new MailServerPropsImpl(serverPropsFileName);
+    }
+
     private MailServerPropsImpl() {
         this.serverPropsFileName = "mail/smtp.props";
         loadProperties();
@@ -46,16 +54,6 @@ public final class MailServerPropsImpl implements IMailServerProps {
             props.load(new FileInputStream(file));
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static class Factory {
-        public static MailServerPropsImpl getInstance () {
-            return new MailServerPropsImpl();
-        }
-
-        public static MailServerPropsImpl getInstance (String serverPropsFileName) {
-            return new MailServerPropsImpl(serverPropsFileName);
         }
     }
 }

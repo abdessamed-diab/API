@@ -22,7 +22,7 @@ public class MailSender implements IEndUserRequest{
         authenticatedSession.setDebug(true);
 
         AtomicInteger sentMessages = new AtomicInteger(0);
-        collectionUsers.findUsersBornToday().stream()
+        collectionUsers.findEmployeesBornToday().stream()
                 .map( user -> buildMessage(authenticatedSession, user.getEmail(), user.getFirstName() )  )
                 .filter(message -> message != null)
                 .forEach(message -> {
