@@ -8,7 +8,7 @@ public interface IMailServerProps {
 
     /**
      * load smtp server properties. in this case Gmail account.
-     * @return @{@link Properties}
+     * @return {@link Properties}
      */
     Properties getProps();
 

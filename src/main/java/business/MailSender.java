@@ -46,7 +46,7 @@ public class MailSender implements IEndUserRequest{
 
     /**
      * authenticate to smtp server with credentials
-     * @return @{@link Session} valid smpt session.
+     * @return {@link Session} valid smpt session.
      */
     private Session getAuthenticatedSession() {
         Properties props = mailServerProps.getProps();
@@ -68,9 +68,9 @@ public class MailSender implements IEndUserRequest{
     /**
      *
      * @param authenticatedSession we need to provide a valid smtp session to construct an email.
-     * @param internetAddress @{@link String} containing receiver email address.
+     * @param internetAddress {@link String} containing receiver email address.
      * @param firstName email message contains firstName of email receiver.
-     * @return @{@link MimeMessage}
+     * @return {@link MimeMessage}
      */
     private MimeMessage buildMessage(Session authenticatedSession, String internetAddress, String firstName) {
         MimeMessage message = new MimeMessage(authenticatedSession);

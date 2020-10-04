@@ -77,7 +77,7 @@ public class Employee implements Cloneable, Serializable, Comparable<Employee> {
     }
 
     /**
-     * since we are using a @{@link java.util.Set<Employee>}, then we should implement {@link Comparable} interface.
+     * since we are using a {@link java.util.Set<Employee>}, then we should implement {@link Comparable} interface.
      * @param employee employee we want to compare to.
      * @return -1 if current employee was born before the compared-to employee,
      * 1 if current employee was born after the compared-to employee.
