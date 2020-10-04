@@ -1,15 +1,15 @@
 package serverSide;
 
-import business.IEmptyCollectionUsers;
+import business.IEmptyCollectionEmployees;
 import business.models.Employee;
 
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class EmptyCollectionUsersImpl extends CollectionUsersImpl implements IEmptyCollectionUsers {
+public class EmptyCollectionEmployeesImpl extends CollectionEmployeesImpl implements IEmptyCollectionEmployees {
 
-    public EmptyCollectionUsersImpl() {
+    public EmptyCollectionEmployeesImpl() {
         super();
         super.employees = new TreeSet<>();
     }

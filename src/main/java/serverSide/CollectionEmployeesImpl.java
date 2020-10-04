@@ -1,6 +1,6 @@
 package serverSide;
 
-import business.ICollectionUsers;
+import business.ICollectionEmployees;
 import business.models.Employee;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,17 +16,17 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CollectionUsersImpl implements ICollectionUsers {
-    private static final Logger LOGGER = Logger.getLogger(CollectionUsersImpl.class.getSimpleName());
+public class CollectionEmployeesImpl implements ICollectionEmployees {
+    private static final Logger LOGGER = Logger.getLogger(CollectionEmployeesImpl.class.getSimpleName());
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     private FileLoader fileLoader;
     protected Set<Employee> employees;
     protected LocalDate today= LocalDate.now(ZoneId.systemDefault());
 
-    protected CollectionUsersImpl() {
+    protected CollectionEmployeesImpl() {
     }
 
-    public CollectionUsersImpl(String flatFilePath) throws IllegalArgumentException {
+    public CollectionEmployeesImpl(String flatFilePath) throws IllegalArgumentException {
         try {
             fileLoader = StringUtils.isNotBlank(flatFilePath) ?
                     new FileLoader(flatFilePath) :

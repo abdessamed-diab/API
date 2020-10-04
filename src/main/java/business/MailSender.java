@@ -8,10 +8,10 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MailSender implements IEndUserRequest{
-    private ICollectionUsers collectionUsers;
+    private ICollectionEmployees collectionUsers;
     private IMailServerProps mailServerProps;
 
-    public MailSender(ICollectionUsers collectionUsers, IMailServerProps mailServerProps) {
+    public MailSender(ICollectionEmployees collectionUsers, IMailServerProps mailServerProps) {
         this.collectionUsers = collectionUsers;
         this.mailServerProps = mailServerProps;
     }

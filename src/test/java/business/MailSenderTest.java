@@ -3,7 +3,7 @@ package business;
 import business.models.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import serverSide.EmptyCollectionUsersImpl;
+import serverSide.EmptyCollectionEmployeesImpl;
 import serverSide.MailServerPropsImpl;
 
 import java.io.IOException;
@@ -15,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MailSenderTest {
-    private EmptyCollectionUsersImpl collectionUsers;
+    private EmptyCollectionEmployeesImpl collectionUsers;
 
     @BeforeEach
     public void init() {
-        collectionUsers = new EmptyCollectionUsersImpl();
+        collectionUsers = new EmptyCollectionEmployeesImpl();
     }
 
     @Test

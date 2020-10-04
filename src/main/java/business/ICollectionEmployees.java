@@ -4,7 +4,7 @@ import business.models.Employee;
 
 import java.util.Set;
 
-public interface ICollectionUsers {
+public interface ICollectionEmployees {
 
     Set<Employee> allEmployees();
 

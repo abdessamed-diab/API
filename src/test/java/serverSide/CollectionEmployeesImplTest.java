@@ -1,7 +1,7 @@
 package serverSide;
 
-import business.ICollectionUsers;
-import business.IEmptyCollectionUsers;
+import business.ICollectionEmployees;
+import business.IEmptyCollectionEmployees;
 import business.models.Employee;
 import org.junit.jupiter.api.Test;
 
@@ -13,40 +13,40 @@ import java.util.TreeSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class CollectionUsersImplTest {
-    private ICollectionUsers collectionUsers;
+class CollectionEmployeesImplTest {
+    private ICollectionEmployees collectionUsers;
 
     @Test
     public void testConstructorExpectedIllegalArgException() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new CollectionUsersImpl("testServerSideFlatFiles/users.csvv");
+            new CollectionEmployeesImpl("testServerSideFlatFiles/users.csvv");
         });
     }
 
     @Test
     public void testAllEmployees() {
-        collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users_0.csv");
+        collectionUsers = new CollectionEmployeesImpl("testServerSideFlatFiles/users_0.csv");
         Set<Employee> employees = collectionUsers.allEmployees();
         assertEquals(2, employees.size());
     }
 
     @Test
     public void testAllEmployeesThrowDateTimeParseException() {
-        collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users.csv");
+        collectionUsers = new CollectionEmployeesImpl("testServerSideFlatFiles/users.csv");
         Set<Employee> employees = collectionUsers.allEmployees();
         assertEquals(2, employees.size());
     }
 
     @Test
     public void testAllEmployeesSplitLine() {
-        collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users_2.csv");
+        collectionUsers = new CollectionEmployeesImpl("testServerSideFlatFiles/users_2.csv");
         Set<Employee> employees = collectionUsers.allEmployees();
         assertEquals(2, employees.size());
     }
 
     @Test
     public void testAllEmployeesLoadOnlyFourFields() {
-        collectionUsers = new CollectionUsersImpl("testServerSideFlatFiles/users_3.csv");
+        collectionUsers = new CollectionEmployeesImpl("testServerSideFlatFiles/users_3.csv");
         Set<Employee> employees = collectionUsers.allEmployees();
         assertEquals(1, employees.size());
     }
@@ -66,20 +66,20 @@ class CollectionUsersImplTest {
             employees.add(bornTodayEmployee);
         }
 
-        collectionUsers = new EmptyCollectionUsersImpl();
-        ((IEmptyCollectionUsers)collectionUsers).setEmployees(employees);
+        collectionUsers = new EmptyCollectionEmployeesImpl();
+        ((IEmptyCollectionEmployees)collectionUsers).setEmployees(employees);
         assertEquals(5, collectionUsers.findEmployeesBornToday().size());
     }
 
     @Test
     public void testFindEmployeesBornTodayLeapNoLeapYear() {
-        collectionUsers = new EmptyCollectionUsersImpl();
+        collectionUsers = new EmptyCollectionEmployeesImpl();
         LocalDate now = LocalDate.now(ZoneId.systemDefault());
         LocalDate todayNotLeapYear = LocalDate.of(2021, now.getMonth().getValue(), now.getDayOfMonth());
         LocalDate bornLeapYear = LocalDate.of(1984, now.getMonth().getValue(), now.getDayOfMonth());
         Employee employee = new Employee("lastname", "firstname", bornLeapYear, "internetAddress@example.fr");
-        ((IEmptyCollectionUsers)collectionUsers).addEmployee(employee);
-        ((IEmptyCollectionUsers)collectionUsers).setToday(todayNotLeapYear);
+        ((IEmptyCollectionEmployees)collectionUsers).addEmployee(employee);
+        ((IEmptyCollectionEmployees)collectionUsers).setToday(todayNotLeapYear);
         assertEquals(1, collectionUsers.findEmployeesBornToday().size());
     }
 
