@@ -8,6 +8,7 @@
     <artifactId>adservio.kata</artifactId>
     <version>1.1-RC1</version>
     <name>KATA: Hexagonal-Architecture - ${project.version}</name>
+    <url>https://github.com/abdessamed-diab/kata</url>
 
     <developers>
         <developer>
@@ -17,6 +18,11 @@
             <organization>adservio</organization>
         </developer>
     </developers>
+
+    <organization>
+        <name>adservio</name>
+        <url>http://www.adservio.fr/</url>
+    </organization>
 
     <contributors>
         <contributor>
