@@ -16,36 +16,36 @@ public class EmployeeTest {
 
     @BeforeEach
     public void init() {
-        employee = new Employee("diab", "abdessamed", date, "abdessamed.diab@adservio.fr");
+        employee = new Employee("diab", "abdessamed", date, "abdou_gl@live.fr");
     }
 
     @Test
     public void testEquals() {
         Employee employee2 = new Employee("DIAB", "Abdessamed", date,
-                "abdessamed.diab@adservio.fr");
+                "abdou_gl@live.fr");
         assertEquals(employee, employee2);
 
         employee2 = new Employee("DIAB", "Abdessamed", date,
-                "abdessamed.diab@adservio.com");
+                "abdou_gl@live.com");
         assertNotEquals(employee, employee2);
 
         employee2 = new Employee("DIAB", "Abdessamed", LocalDate.of(1989, 12, 3),
-                "abdessamed.diab@adservio.fr");
+                "abdou_gl@live.fr");
         assertNotEquals(employee, employee2);
     }
 
     @Test
     @Ignore
     public void testCompareTo() {
-        Employee employee2 = new Employee("DIAB", "Abdessamed", date, "abdessamed.diab@adservio.fr");
+        Employee employee2 = new Employee("DIAB", "Abdessamed", date, "abdou_gl@live.fr");
         assertEquals(0 , employee2.compareTo(employee));
 
         employee2 = new Employee("DIAB", "Abdessamed", LocalDate.of(1989, 12, 3),
-                "abdessamed.diab@adservio.fr");
+                "abdou_gl@live.fr");
         assertEquals(1 , employee2.compareTo(employee));
 
         employee2 = new Employee("DIAB", "Abdessamed", LocalDate.of(1989, 12, 1),
-                "abdessamed.diab@adservio.fr");
+                "abdou_gl@live.fr");
         assertEquals(-1 , employee2.compareTo(employee));
     }
 

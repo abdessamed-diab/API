@@ -4,32 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.adservio</groupId>
-    <artifactId>adservio.kata</artifactId>
-    <version>1.1-RC1</version>
-    <name>KATA: Hexagonal-Architecture - ${project.version}</name>
-    <url>https://github.com/abdessamed-diab/kata</url>
-
-    <developers>
-        <developer>
-            <name>DIAB Abdessamed</name>
-            <email>abdessamed.diab@adservio.fr</email>
-            <url>http://diab.rahba.net</url>
-            <organization>adservio</organization>
-        </developer>
-    </developers>
+    <groupId>dz.cirtaflow</groupId>
+    <artifactId>dz-cirtaflow-mail-sender</artifactId>
+    <version>1.2.0-RC1</version>
+    <name>automated mail-sender ${project.version}</name>
+    <url>http://diab.rahba.net</url>
 
     <organization>
-        <name>adservio</name>
-        <url>http://www.adservio.fr/</url>
+        <name>rahba.net</name>
+        <url>http://diab.rahba.net</url>
     </organization>
 
     <contributors>
         <contributor>
             <name>DIAB Abdessamed</name>
-            <email>abdessamed.diab@adservio.fr</email>
-            <url>http://rahba.net</url>
-            <organization>adservio</organization>
+            <email>abdou_gl@live.fr</email>
+            <url>https://www.instagram.com/diab_dz/</url>
+            <organization>rahba.net</organization>
         </contributor>
     </contributors>
 
@@ -110,6 +101,6 @@
 
 
     <description>
-        this project is powered by adservio -  TITLE  - Loads and sends emails to a set of employee records from a flat file.
+        automated mail service.
     </description>
 </project>

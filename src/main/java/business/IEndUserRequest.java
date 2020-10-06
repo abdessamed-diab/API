@@ -6,11 +6,12 @@ package business;
  * in this example, user side is a console.
  */
 public interface IEndUserRequest {
+
     /**
      * send birthdays emails to all employees born today.
      * @return number of emails was sent.
      * @throws IllegalArgumentException since we are using gmail server as a default mail server in this example,
      * make sure that the encrypted password saved under resources/mail/smtp.props is correct and valid.
      */
-    int send() throws IllegalArgumentException;
+    int send();
 }

@@ -1,11 +1,6 @@
 package business;
 
-import javax.crypto.BadPaddingException;
-import javax.mail.*;
-import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.concurrent.atomic.AtomicInteger;
+import business.models.Message;
 
 /**
  * this class represent core business logic, load set of employees and send birthdays emails.
@@ -13,76 +8,29 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class MailSender implements IEndUserRequest{
     private ICollectionEmployees collectionUsers;
-    private IMailServerProps mailServerProps;
+    private IMessageBuilder messageBuilder;
 
     /**
      * initializing constructor
      * @param collectionUsers {@link ICollectionEmployees} list of users.
-     * @param mailServerProps {@link IMailServerProps} properties to connect to valid smtp session.
+     * @param messageBuilder {@link IMessageBuilder} object responsible of managing messages.
      */
-    public MailSender(ICollectionEmployees collectionUsers, IMailServerProps mailServerProps) {
+    public MailSender(ICollectionEmployees collectionUsers, IMessageBuilder messageBuilder) {
         this.collectionUsers = collectionUsers;
-        this.mailServerProps = mailServerProps;
+        this.messageBuilder = messageBuilder;
     }
 
     @Override
-    public int  send() throws IllegalArgumentException {
-        Session authenticatedSession = getAuthenticatedSession();
-        authenticatedSession.setDebug(true);
-
-        AtomicInteger sentMessages = new AtomicInteger(0);
+    public int  send() {
         collectionUsers.findEmployeesDateBirthdayToday().stream()
-                .map( user -> buildMessage(authenticatedSession, user.getEmail(), user.getFirstName() )  )
-                .filter(message -> message != null)
-                .forEach(message -> {
-                    try {
-                        Transport.send(message);
-                        sentMessages.incrementAndGet();
-                    } catch (MessagingException e) {e.printStackTrace();}
-                });
+                .forEach( user -> messageBuilder.addMessage(user.getEmail(), user.getFirstName(),
+                        new Message("Happy birthday!", "Happy birthday, dear "))
+                );
 
-        return sentMessages.get();
+        return messageBuilder.transportSendMessages();
     }
 
-    /**
-     * authenticate to smtp server with credentials
-     * @return {@link Session} valid smpt session.
-     */
-    private Session getAuthenticatedSession() {
-        Properties props = mailServerProps.getProps();
-        StringBuilder strBuilder = new StringBuilder(props.getProperty("pass"));
-        try {
-            strBuilder.replace(0, strBuilder.length(), mailServerProps.decryptPassword());
-        } catch ( BadPaddingException |IOException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("check provided password: "+strBuilder.toString());
-        }
 
-        return Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(props.getProperty("from"), strBuilder.toString());
-            }
-        });
-    }
 
-    /**
-     *
-     * @param authenticatedSession we need to provide a valid smtp session to construct an email.
-     * @param internetAddress {@link String} containing receiver email address.
-     * @param firstName email message contains firstName of email receiver.
-     * @return {@link MimeMessage}
-     */
-    private MimeMessage buildMessage(Session authenticatedSession, String internetAddress, String firstName) {
-        MimeMessage message = new MimeMessage(authenticatedSession);
-        try {
-            message.setFrom(authenticatedSession.getProperty("from"));
-            message.addRecipients(Message.RecipientType.TO, internetAddress);
-            message.setSubject("Happy birthday!");
-            message.setText("Happy birthday, dear "+firstName+"!");
-            return message;
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 }
