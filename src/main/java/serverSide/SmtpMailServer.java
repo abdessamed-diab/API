@@ -1,8 +1,7 @@
 package serverSide;
 
 import business.IMessageBuilder;
-import business.models.Employee;
-import business.models.Message;
+import business.models.IMessage;
 import org.apache.commons.lang3.StringUtils;
 import serverSide.security.DecryptPassword;
 
@@ -17,23 +16,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public final class MessageBuilderImpl implements IMessageBuilder {
+public final class SmtpMailServer implements IMessageBuilder {
     private Properties props;
     private String serverPropsFileName;
     private Session authenticatedSession;
-    private Set<Message> messages= new HashSet<>();
+    private Set<IMessage<? extends Object>> genericMessages = new HashSet<>();
 
-    public static MessageBuilderImpl getInstance (String serverPropsFileName) {
-        return new MessageBuilderImpl(serverPropsFileName);
+    public static SmtpMailServer getInstance (String serverPropsFileName) {
+        return new SmtpMailServer(serverPropsFileName);
     }
 
-    private MessageBuilderImpl(String serverPropsFileName) throws IllegalArgumentException{
+    private SmtpMailServer(String serverPropsFileName) throws IllegalArgumentException{
         this.serverPropsFileName = StringUtils.isBlank(serverPropsFileName) ? "mail/smtp.props" : serverPropsFileName;
         initSmtpServer();
     }
@@ -45,25 +43,22 @@ public final class MessageBuilderImpl implements IMessageBuilder {
     }
 
     @Override
-    public void addMessage(String internetAddress, String firstName, Message simpleTextMessage) {
-        simpleTextMessage.addAnchorToTextContent();
-        simpleTextMessage.replaceAnchorOfTextContent(firstName);
-        simpleTextMessage.addAnchorToTextContent();
-        simpleTextMessage.replaceAnchorOfTextContent("!");
-        simpleTextMessage.setUser(new Employee("last_name", firstName, LocalDate.now(), internetAddress));
-        messages.add(simpleTextMessage);
+    public void addMessage(IMessage genericMessage) {
+        genericMessages.add(genericMessage);
     }
 
-    public Set<Message> getMessages() {
-        return messages;
+    @Override
+    public Set<IMessage<? extends Object>> getGenericMessages() {
+        return genericMessages;
     }
+
 
     @Override
     public int transportSendMessages() {
         AtomicInteger sentMessages = new AtomicInteger(0);
-        messages.stream()
-                .filter(message -> message != null)
-                .map(message -> messageToMimeMessage(message))
+        genericMessages.stream()
+                .filter(genericMessage -> genericMessage != null)
+                .map(genericMessage -> messageToMimeMessage(genericMessage))
                 .forEach(mimeMessage -> {
                     try {
                         Transport.send(mimeMessage);
@@ -109,13 +104,13 @@ public final class MessageBuilderImpl implements IMessageBuilder {
         });
     }
 
-    private MimeMessage messageToMimeMessage(Message message) {
+    private MimeMessage messageToMimeMessage(IMessage genericMessage) {
         MimeMessage mimeMessage = new MimeMessage(authenticatedSession);
         try {
-            mimeMessage.addRecipients(javax.mail.Message.RecipientType.TO, message.getUser().getEmail());
+            mimeMessage.addRecipients(javax.mail.Message.RecipientType.TO, genericMessage.to().getEmail());
             mimeMessage.setFrom(authenticatedSession.getProperty("from"));
-            mimeMessage.setSubject(message.getSubject());
-            mimeMessage.setText(message.getTextContent().toString());
+            mimeMessage.setSubject(genericMessage.subject());
+            mimeMessage.setText(genericMessage.content().toString());
         } catch (MessagingException e) {
             e.printStackTrace();
         }

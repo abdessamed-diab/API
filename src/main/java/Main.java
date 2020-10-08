@@ -3,7 +3,7 @@ import business.IEndUserRequest;
 import business.IMessageBuilder;
 import business.MailSender;
 import serverSide.CollectionEmployeesImpl;
-import serverSide.MessageBuilderImpl;
+import serverSide.SmtpMailServer;
 import userSide.EndUserConsole;
 
 /**
@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         ICollectionEmployees collectionUsers = new CollectionEmployeesImpl("");
-        IMessageBuilder mailServerProps = MessageBuilderImpl.getInstance("");
+        IMessageBuilder mailServerProps = SmtpMailServer.getInstance("");
         IEndUserRequest endUserRequest = new MailSender(collectionUsers, mailServerProps);
 
         EndUserConsole console = new EndUserConsole(endUserRequest);

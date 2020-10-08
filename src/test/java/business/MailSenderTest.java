@@ -4,7 +4,7 @@ import business.models.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import serverSide.EmptyCollectionEmployeesImpl;
-import serverSide.MessageBuilderImpl;
+import serverSide.SmtpMailServer;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -26,7 +26,7 @@ class MailSenderTest {
         for (int i=0; i <2 ; i++) {
             collectionUsers.addEmployee(new Employee("DIAB"+i, "Abdessamed"+i, today, "abdessamed.diab@gmail.com"));
         }
-        MailSender mailSender = new MailSender(collectionUsers, MessageBuilderImpl.getInstance(""));
+        MailSender mailSender = new MailSender(collectionUsers, SmtpMailServer.getInstance(""));
         assertEquals(2, mailSender.send());
     }
 
@@ -34,7 +34,7 @@ class MailSenderTest {
     public void testSendThrowIllegalArgException() {
         assertThrows(IllegalArgumentException.class, () -> {
             new MailSender(collectionUsers,
-                    MessageBuilderImpl.getInstance("mail/test_smtp_IAException.props"));
+                    SmtpMailServer.getInstance("mail/test_smtp_IAException.props"));
         });
     }
 

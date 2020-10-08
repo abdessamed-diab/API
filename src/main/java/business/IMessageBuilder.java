@@ -1,6 +1,6 @@
 package business;
 
-import business.models.Message;
+import business.models.IMessage;
 
 import java.util.Set;
 
@@ -8,12 +8,10 @@ public interface IMessageBuilder {
 
     /**
      * add message to a set of message that we want to send.
-     * @param internetAddress {@link String} containing receiver email address.
-     * @param firstName email message contains firstName of email receiver.
      */
-    void addMessage(String internetAddress, String firstName, Message message);
+    void addMessage(IMessage genericMessage);
 
-    Set<Message> getMessages();
+    Set<IMessage<? extends Object>> getGenericMessages();
 
     int transportSendMessages();
 

@@ -1,6 +1,7 @@
 package business;
 
-import business.models.Message;
+import business.models.IMessage;
+import business.models.TextMessage;
 
 /**
  * this class represent core business logic, load set of employees and send birthdays emails.
@@ -23,9 +24,13 @@ public class MailSender implements IEndUserRequest{
     @Override
     public int  send() {
         collectionUsers.findEmployeesDateBirthdayToday().stream()
-                .forEach( user -> messageBuilder.addMessage(user.getEmail(), user.getFirstName(),
-                        new Message("Happy birthday!", "Happy birthday, dear "))
-                );
+                .forEach( user -> {
+                    IMessage<String> genericMessage = new TextMessage(
+                            "Happy birthday!",
+                            "Happy birthday, dear ",
+                            user);
+                    messageBuilder.addMessage(genericMessage);
+                });
 
         return messageBuilder.transportSendMessages();
     }

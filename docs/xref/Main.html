@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> business.IMessageBuilder;
 <a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> business.MailSender;
 <a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> serverSide.CollectionEmployeesImpl;
-<a class="jxr_linenumber" name="6" href="#6">6</a>   <strong class="jxr_keyword">import</strong> serverSide.MessageBuilderImpl;
+<a class="jxr_linenumber" name="6" href="#6">6</a>   <strong class="jxr_keyword">import</strong> serverSide.SmtpMailServer;
 <a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">import</strong> userSide.EndUserConsole;
 <a class="jxr_linenumber" name="8" href="#8">8</a>   
 <a class="jxr_linenumber" name="9" href="#9">9</a>   <em class="jxr_javadoccomment">/**</em>
@@ -25,7 +25,7 @@
 <a class="jxr_linenumber" name="15" href="#15">15</a>  
 <a class="jxr_linenumber" name="16" href="#16">16</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) {
 <a class="jxr_linenumber" name="17" href="#17">17</a>          <a href="../business/ICollectionEmployees.html">ICollectionEmployees</a> collectionUsers = <strong class="jxr_keyword">new</strong> <a href="../serverSide/CollectionEmployeesImpl.html">CollectionEmployeesImpl</a>(<span class="jxr_string">""</span>);
-<a class="jxr_linenumber" name="18" href="#18">18</a>          <a href="../business/IMessageBuilder.html">IMessageBuilder</a> mailServerProps = MessageBuilderImpl.getInstance(<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="18" href="#18">18</a>          <a href="../business/IMessageBuilder.html">IMessageBuilder</a> mailServerProps = SmtpMailServer.getInstance(<span class="jxr_string">""</span>);
 <a class="jxr_linenumber" name="19" href="#19">19</a>          <a href="../business/IEndUserRequest.html">IEndUserRequest</a> endUserRequest = <strong class="jxr_keyword">new</strong> <a href="../business/MailSender.html">MailSender</a>(collectionUsers, mailServerProps);
 <a class="jxr_linenumber" name="20" href="#20">20</a>  
 <a class="jxr_linenumber" name="21" href="#21">21</a>          <a href="../userSide/EndUserConsole.html">EndUserConsole</a> console = <strong class="jxr_keyword">new</strong> <a href="../userSide/EndUserConsole.html">EndUserConsole</a>(endUserRequest);
