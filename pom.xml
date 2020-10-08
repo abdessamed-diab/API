@@ -7,7 +7,7 @@
     <groupId>dz.cirtaflow</groupId>
     <artifactId>dz-cirtaflow-mail-sender</artifactId>
     <version>1.2.0-RC1</version>
-    <name>automated mail-sender ${project.version}</name>
+    <name>message-sender API</name>
     <url>http://diab.rahba.net</url>
 
     <organization>
