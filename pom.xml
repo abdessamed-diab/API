@@ -6,20 +6,36 @@
 
     <groupId>dz.cirtaflow</groupId>
     <artifactId>dz-cirtaflow-mail-sender</artifactId>
-    <version>1.2.0-RC1</version>
+    <version>1.3.0</version>
     <name>message-sender API</name>
-    <url>http://diab.rahba.net</url>
+    <url>https://rahba.net/</url>
 
     <organization>
         <name>rahba.net</name>
-        <url>http://diab.rahba.net</url>
+        <url>https://rahba.net/</url>
     </organization>
+
+    <ciManagement>
+        <url>https://720016e0cb14.ngrok.io/job/pipeline_project_1/</url>
+        <notifiers>
+            <notifier>
+                <type>push</type>
+                <sendOnFailure>true</sendOnFailure>
+            </notifier>
+        </notifiers>
+        <system>jenkins</system>
+    </ciManagement>
+
+    <packaging>jar</packaging>
+    <scm>
+        <url>scm:git:https://github.com/abdessamed-diab/API/tree/feat-blog-api</url>
+    </scm>
 
     <developers>
         <developer>
             <name>DIAB Abdessamed</name>
-            <email>abdou_gl@live.fr</email>
-            <url>http://diab.rahba.net</url>
+            <email>abdessamed.diab@gmail.com</email>
+            <url>https://rahba.net/</url>
             <organization>rahba.net</organization>
         </developer>
     </developers>
@@ -27,8 +43,8 @@
     <contributors>
         <contributor>
             <name>DIAB Abdessamed</name>
-            <email>abdou_gl@live.fr</email>
-            <url>http://diab.rahba.net</url>
+            <email>abdessamed.diab@gmail.com</email>
+            <url>https://rahba.net/</url>
             <organization>rahba.net</organization>
         </contributor>
     </contributors>
@@ -108,8 +124,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
-
     <description>
-        automated mail service.
+        the main purpose behind creating ths pet-project is in short to automate it's build process.
+        in this example, i created a declarative pipeline within jenkins in order to build and generate the artifact from source code.
+        you can visit and check out all build stages such as packaging, testing and deploying to a remote server.
     </description>
 </project>

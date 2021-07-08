@@ -32,13 +32,6 @@ pipeline {
       }
     }
 
-    stage('validate') {
-      steps {
-        echo "start validating source code."
-        sh "mvn validate"
-      }
-    }
-
     stage('compile') {
       steps {
         sh "mvn compile"
@@ -67,9 +60,12 @@ pipeline {
 
     stage('package') {
       steps {
-        sh "mvn package"
+        sh "mvn package site"
+        publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site',
+                  reportFiles: 'index.html', reportName: 'site report', reportTitles: "documentation for $currentBuild.projectName" ])
       }
     }
+
 
   }
 
