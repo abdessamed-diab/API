@@ -14,8 +14,10 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -69,6 +71,17 @@ public final class SmtpMailServer implements IMessageBuilder {
                 });
 
         return sentMessages.get();
+    }
+
+    /**
+     *
+     * @param originalPassword password we want to encrypt
+     * @return encrypted password
+     * @throws GeneralSecurityException
+     * @throws UnsupportedEncodingException
+     */
+    public static String encryptPassword(String originalPassword) throws GeneralSecurityException, UnsupportedEncodingException {
+        return DecryptPassword.encrypt(originalPassword);
     }
 
     /**

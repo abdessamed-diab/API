@@ -7,9 +7,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.io.UnsupportedEncodingException;
+import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 import java.util.logging.Logger;
@@ -32,6 +31,15 @@ public final class DecryptPassword {
         int keyLength = 128;
         SecretKeySpec key = createSecretKey("secret".toCharArray(), salt, iterationCount, keyLength);
         return decrypt(saltEncryptedPassword, key);
+    }
+
+    public static String encrypt(String originalPassword) throws GeneralSecurityException, UnsupportedEncodingException {
+        byte[] salt = new String("12345678").getBytes();
+        int iterationCount = 40000;
+        int keyLength = 128;
+        SecretKeySpec key = createSecretKey("secret".toCharArray(), salt, iterationCount, keyLength);
+
+        return encrypt(originalPassword, key);
     }
 
     private static SecretKeySpec createSecretKey(char[] password, byte[] salt, int iterationCount, int keyLength) {
@@ -66,4 +74,19 @@ public final class DecryptPassword {
     private static byte[] base64Decode(String property) throws IOException {
         return Base64.getDecoder().decode(property);
     }
+
+    private static String encrypt(String property, SecretKeySpec key) throws GeneralSecurityException, UnsupportedEncodingException {
+        Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        pbeCipher.init(Cipher.ENCRYPT_MODE, key);
+        AlgorithmParameters parameters = pbeCipher.getParameters();
+        IvParameterSpec ivParameterSpec = parameters.getParameterSpec(IvParameterSpec.class);
+        byte[] cryptoText = pbeCipher.doFinal(property.getBytes("UTF-8"));
+        byte[] iv = ivParameterSpec.getIV();
+        return base64Encode(iv) + ":" + base64Encode(cryptoText);
+    }
+
+    private static String base64Encode(byte[] bytes) {
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
 }

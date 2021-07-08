@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -33,8 +34,7 @@ class CollectionEmployeesImplTest {
     @Test
     public void testAllEmployeesThrowDateTimeParseException() {
         collectionUsers = new CollectionEmployeesImpl("testServerSideFlatFiles/users.csv");
-        Set<Employee> employees = collectionUsers.allEmployees();
-        assertEquals(2, employees.size());
+        assertThrows(DateTimeParseException.class, () -> collectionUsers.allEmployees());
     }
 
     @Test

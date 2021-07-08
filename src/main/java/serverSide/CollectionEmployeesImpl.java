@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -40,7 +41,7 @@ public class CollectionEmployeesImpl implements ICollectionEmployees {
     }
 
     @Override
-    public synchronized Set<Employee> allEmployees() {
+    public synchronized Set<Employee> allEmployees() throws DateTimeParseException{
         if (employees == null) {
             employees = new TreeSet<>();
             loadUsers();
@@ -51,7 +52,16 @@ public class CollectionEmployeesImpl implements ICollectionEmployees {
 
     @Override
     public Set<Employee> findEmployeesDateBirthdayToday() {
-        return allEmployees().stream().filter(user -> {
+        Set<Employee> employees= null;
+
+        try {
+            employees = allEmployees();
+        } catch (DateTimeParseException ex) {
+            ex.printStackTrace();
+            return Collections.emptySet();
+        }
+
+        return employees.stream().filter(user -> {
             if (user.getDateOfBirth().isLeapYear() && !today.isLeapYear()) {
                 return user.getDateOfBirth().getDayOfYear() == today.getDayOfYear() +1;
             }
@@ -64,7 +74,7 @@ public class CollectionEmployeesImpl implements ICollectionEmployees {
     /**
      * iterate over flat file records, instantiate {@link Employee} entities and fill {@link Set<Employee>} employees.
      */
-    private void loadUsers() {
+    private void loadUsers() throws DateTimeParseException{
         fileLoader.generateBufferedReader().lines().skip(1).forEach(line -> {
             String[] lineToUserPropValues = line.split(",");
             List<String> formatLine = Stream.of(lineToUserPropValues)
@@ -74,17 +84,13 @@ public class CollectionEmployeesImpl implements ICollectionEmployees {
 
             if (formatLine.size() == Employee.class.getDeclaredFields().length) {
                 LocalDate dateOfBirth = null;
-                try {
-                    dateOfBirth = LocalDate.parse(formatLine.get(2), dateTimeFormatter);
-                    Employee employee = new Employee(formatLine.get(0),
-                            formatLine.get(1),
-                            dateOfBirth,
-                            formatLine.get(3));
-                    employees.add(employee);
-                } catch (DateTimeParseException ex) {
-                    LOGGER.severe("can't parse given line segment: "+formatLine.get(2));
-                    ex.printStackTrace();
-                }
+
+                dateOfBirth = LocalDate.parse(formatLine.get(2), dateTimeFormatter);
+                Employee employee = new Employee(formatLine.get(0),
+                        formatLine.get(1),
+                        dateOfBirth,
+                        formatLine.get(3));
+                employees.add(employee);
             }
 
         });

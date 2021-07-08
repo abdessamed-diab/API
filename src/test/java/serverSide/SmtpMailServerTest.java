@@ -5,6 +5,8 @@ import business.models.Employee;
 import business.models.TextMessage;
 import org.junit.jupiter.api.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,4 +38,9 @@ class SmtpMailServerTest {
         });
     }
 
+    @Test
+    public void testEncryptPassword() throws GeneralSecurityException, UnsupportedEncodingException {
+        String encryptedPassword = SmtpMailServer.encryptPassword("abdessamed178");
+        assertNotNull(encryptedPassword);
+    }
 }

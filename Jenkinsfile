@@ -2,6 +2,7 @@ pipeline {
   agent any
   environment {
     maven_is_installed = sh (script: "mvn -v", returnStatus: true)
+    testResultSummary = 100
   }
 
   stages {
@@ -21,12 +22,12 @@ pipeline {
       }
       steps {
         script {
-          $currentBuild.result = 'aborted'
+          currentBuild.result = 'aborted'
         }
       }
       post {
         aborted {
-          echo 'build was aborted due system requirements.'
+          error "build was aborted due system requirements."
         }
       }
     }
@@ -46,8 +47,27 @@ pipeline {
 
     stage('test') {
       steps {
-          sh "mvn test"
+          sh "mvn --fail-never test"
+          script {
+            def summary = junit allowEmptyResults: true, healthScaleFactor: 2, testResults: 'target/surefire-reports/*.xml'
+            testResultSummary = (summary.totalCount / summary.failCount ) * 10
+            if (testResultSummary < 90) {
+                currentBuild.result = 'aborted'
+            }
+          }
       }
+
+      post {
+          aborted {
+              error "build is aborted due project health, check test success percentage: $testResultSummary"
+          }
+      }
+    }
+
+    stage('package') {
+        steps {
+            sh "mvn package"
+        }
     }
 
   }
