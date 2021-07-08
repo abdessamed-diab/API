@@ -8,8 +8,8 @@ pipeline {
   stages {
     stage('checkout') {
       steps {
-          echo "checkout $currentBuild.projectName from github repository"
-          checkout scm: [$class: 'GitSCM', branches: [[name: 'refs/heads/feat-blog-api']], extensions: [], userRemoteConfigs: [[credentialsId: 'test', name: 'origin', refspec: 'refs/heads/feat-blog-api:refs/remotes/origin/feat-blog-api', url: 'https://github.com/abdessamed-diab/API.git']]]
+        echo "checkout $currentBuild.projectName from github repository"
+        checkout scm: [$class: 'GitSCM', branches: [[name: 'refs/heads/feat-blog-api']], extensions: [], userRemoteConfigs: [[credentialsId: 'test', name: 'origin', refspec: 'refs/heads/feat-blog-api:refs/remotes/origin/feat-blog-api', url: 'https://github.com/abdessamed-diab/API.git']]]
       }
     }
 
@@ -34,40 +34,41 @@ pipeline {
 
     stage('validate') {
       steps {
-          echo "start validating source code."
-          sh "mvn validate"
+        echo "start validating source code."
+        sh "mvn validate"
       }
     }
 
     stage('compile') {
       steps {
-          sh "mvn compile"
+        sh "mvn compile"
       }
     }
 
     stage('test') {
       steps {
-          sh "mvn --fail-never test"
-          script {
-            def summary = junit allowEmptyResults: true, healthScaleFactor: 2, testResults: 'target/surefire-reports/*.xml'
-            testResultSummary = (summary.totalCount / summary.failCount ) * 10
-            if (testResultSummary < 90) {
-                currentBuild.result = 'aborted'
-            }
+        sh "mvn --fail-never test"
+        script {
+          def summary = junit allowEmptyResults: true, healthScaleFactor: 2, testResults: 'target/surefire-reports/*.xml'
+          def successPercentage = 100 -  (  ( 100 * summary.failCount / summary.totalCount) * 2  )
+          if ( successPercentage < 90  ) {
+            currentBuild.result = 'aborted'
+            testResultSummary =  successPercentage
           }
+        }
       }
 
       post {
-          aborted {
-              error "build is aborted due project health, check test success percentage: $testResultSummary"
-          }
+        aborted {
+          error "build is aborted due project health, check test success percentage: $testResultSummary"
+        }
       }
     }
 
     stage('package') {
-        steps {
-            sh "mvn package"
-        }
+      steps {
+        sh "mvn package"
+      }
     }
 
   }
